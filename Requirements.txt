@@ -1,0 +1,32 @@
+# prérequis
+1. une base mongoDb 
+## Installation mongoDB
+
+bash
+sudo tee /etc/yum.repos.d/mongodb-org-8.0.repo >/dev/null <<'EOF'
+[mongodb-org-8.0]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/8/mongodb-org/8.0/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://pgp.mongodb.com/server-8.0.asc
+EOF
+
+
+
+sudo dnf install -y mongodb-org
+
+
+2. python 
+## installation python
+python3 -m pip install pymongo
+
+3.Optionnel MongoDb Compass
+sudo dnf install -y curl curl -LO https://downloads.mongodb.com/compass/mongodb-compass-1.46.8.x86_64.rpm 
+sudo dnf install -y ./mongodb-compass-1.46.8.x86_64.rpm
+mongodb-compass
+
+4. panda pour le controle des données avant intégration
+python3 -m pip install pandas
+
+pip3.12 freeze 

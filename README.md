@@ -17,3 +17,5 @@ mongosh
 
 # Importer les données
 	python3 import_csv.py
+#Vérifier les données de la source
+	sudo python3 verifier_csv.py healthcare_dataset.csv
