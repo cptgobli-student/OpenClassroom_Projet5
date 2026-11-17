@@ -77,7 +77,7 @@ def verifier_metier(df):
     return erreurs
     
 def main():
-    fichier = sys.argv[1] if len(sys.argv) > 1 else "healthcare_dataset.csv"
+    fichier = sys.argv[1] if len(sys.argv) > 1 else "./data/healthcare_dataset.csv"
     df = pd.read_csv(fichier, dtype=str, keep_default_na=True,sep=";",engine="python")
     # verification des colonnes + des incohérences métiers
 
