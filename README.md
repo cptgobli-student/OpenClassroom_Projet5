@@ -11,11 +11,14 @@ importer le script import_csv.py
 
 	
 # Initier la base
+
 mongosh
+
 	use hospitalDB
+	
 	db.createCollection("admissions")
 
 # Importer les données
 	python3 import_csv.py
-#Vérifier les données de la source
-	sudo python3 verifier_csv.py healthcare_dataset.csv
+# Vérifier les données de la source: génère un rapport
+	sudo python3 verifier_csv.py ./data/healthcare_dataset.csv
