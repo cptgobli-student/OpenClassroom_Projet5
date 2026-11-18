@@ -10,7 +10,7 @@ importer le fichier de données healthcare_dataset.csv sur le serveur
 importer le script import_csv.py
 
 	
-# Initier la base
+# Initier la base "hospitalDB"
 
 mongosh
 
