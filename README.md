@@ -17,8 +17,10 @@ mongosh
 	use hospitalDB
 	
 	db.createCollection("admissions")
+	db.createCollection("administrations")
+	db.createCollection("patients")
 
 # Importer les données
-	python3 import_csv.py
+        sudo python3 import_csv.py healthcare_dataset.csv	
 # Vérifier les données de la source: génère un rapport
 	sudo python3 verifier_csv.py ./data/healthcare_dataset.csv

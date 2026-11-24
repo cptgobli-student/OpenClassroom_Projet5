@@ -3,7 +3,7 @@ import os
 import sys
 from datetime import datetime
 from pymongo import MongoClient
-
+from bson import ObjectId
 
 #fichier cible
 fichier = sys.argv[1] if len(sys.argv) > 1 else "./data/healthcare_dataset.csv"
@@ -25,12 +25,12 @@ patients = []
 admissions = []
 # tableaux des administrations
 administrations = []
+administration_ids = {}
 
 # ouverture du ficher 
 with open(fichier, newline="", encoding="utf-8-sig") as file:
     # lecture
     reader = csv.DictReader(file,delimiter=";")
-    administration_ids = {}
     
     # pour chaque ligne construction du document d'admission
     for row in reader:
@@ -45,10 +45,18 @@ with open(fichier, newline="", encoding="utf-8-sig") as file:
         )
         
         if cle not in administration_ids:
-            administration_ids[cle] = ObjectId()
+            administration_id= ObjectId()
+            administration_ids[cle] = administration_id
+            administrations.append({
+                "_id": administration_id,
+                "condition_medicale": cle[0],
+                "medication": cle[1],
+                "resultats": cle[2],
+            })
+        else:
+            administration_id = administration_ids[cle]
         
-        administration_id = administration_ids[cle]
-        
+
         patient = {
             "_id": patient_id,
             "nom": row["Name"].strip(),
@@ -58,10 +66,11 @@ with open(fichier, newline="", encoding="utf-8-sig") as file:
         }
          # L'_id sera généré par MongoDB à l'insertion.
         patients.append(patient)
-
+        admission_id = ObjectId()
         admissions.append({
             "_id": admission_id,
-            "_id": administration_id,
+            "patient_id":patient_id,
+            "administration_id": administration_id,
             "date_admission": parse_date(row["Date of Admission"]),
             "medecin": row["Doctor"].strip(),
             "hospital": row["Hospital"].strip(),
@@ -73,12 +82,6 @@ with open(fichier, newline="", encoding="utf-8-sig") as file:
            
         })
        
-         administrations.append({
-            "_id": administration_id,
-            "condition_medicale": cle[0],
-            "medication": cle[1],
-            "resultats": cle[2],
-        })
 
         
 # si les documents existent
