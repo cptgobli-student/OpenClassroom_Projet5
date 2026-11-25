@@ -8,11 +8,16 @@ il s'agit de construire une base de données sous docker MongoDB hébergée sous
 # Prérequis
 importer le fichier de données healthcare_dataset.csv sur le serveur
 importer le script import_csv.py
+importer le script verifier_csv.py
+importer le compose.yml
 
-	
+# Créer le container 
+sudo docker compose up -d
+
+# tester la base du container
+sudo docker exec -it  {Nom_Container} mongosh
+
 # Initier la base "hospitalDB"
-
-mongosh
 
 	use hospitalDB
 	
