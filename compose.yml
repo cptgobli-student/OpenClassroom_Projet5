@@ -1,0 +1,27 @@
+services:
+  mongodb:
+    image: mongo:8.0
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin!
+    ports:
+      - "127.0.0.1:27018:27018"
+    volumes:
+      - ./mongodb-data:/data/db
+
+  importer:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ./csv:/app/csv:ro
+      - ./import_csv.py:/app/import_csv.py:ro
+    environment:
+      MONGO_URI: mongodb://admin:admin!@mongodb:27018/?authSource=admin
+    command: >
+      sh -c "pip install --no-cache-dir pymongo &&
+             python import_csv.py /app/csv/healthcare_dataset.csv"
+    depends_on:
+      - mongodb
+    profiles:
+      - import
